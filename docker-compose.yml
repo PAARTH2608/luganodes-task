@@ -1,0 +1,25 @@
+version: '2.4'
+
+services:
+    react_native_app:
+        build:
+            context: .
+            args:
+                - NODE_ENV=development
+        environment:
+            - NODE_ENV=development
+        tty: true
+        ports:
+            - '19006:19006'
+            - '19001:19001'
+            - '19002:19002'
+        volumes:
+            - ./chat_net:/opt/chat_net:delegated
+            - /opt/chat_net/package.json:/opt/chat_net/package.json
+            - /opt/chat_net/yarn.lock:/opt/chat_net/yarn.lock
+            - notused:/opt/chat_net/app/node_modules
+        healthcheck:
+            disable: true
+
+volumes:
+    notused:
