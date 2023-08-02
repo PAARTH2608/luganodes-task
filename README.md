@@ -32,7 +32,7 @@ To build this project using docker
   docker-compose build
 ```
 
-To build this project using docker
+To run this project using docker
 ```bash
   docker-compose up
 ```
