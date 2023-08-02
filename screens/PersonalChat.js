@@ -1,37 +1,49 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState, useCallback } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { COLORS, SIZES, FONTS } from '../constants'
-import { StatusBar } from 'expo-status-bar'
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
-import { GiftedChat, Send, Bubble } from 'react-native-gifted-chat'
+import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, FONTS } from '../constants';
+import { StatusBar } from 'expo-status-bar';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { GiftedChat, Send, Bubble } from 'react-native-gifted-chat';
+import DHT from '@hyperswarm/dht-relay'
+import { b4a } from 'b4a';
 
-const PersonalChat = ({ navigation }) => {
+const PersonalChat = ({ route }) => {
+    const { userName, publicKey } = route.params // Receiving the server's public key as a parameter
+    console.log(userName, publicKey)
     const [messages, setMessages] = useState([])
-    // console.log(navigation.userName)
+    const [connection, setConnection] = useState(null)
 
     useEffect(() => {
         setMessages([
             {
-                // _id: 1,
-                // text: 'Hello developer',
-                // createdAt: new Date(),
-                // user: {
-                //     _id: 2,
-                //     name: 'React Native',
-                //     avatar: 'https://placeimg.com/140/140/any',
-                // },
+                _id: 1,
+                text: 'Hello developer',
+                createdAt: new Date(),
+                user: {
+                    _id: 2,
+                    name: 'React Native',
+                    avatar: 'https://placeimg.com/140/140/any',
+                },
             },
         ])
     }, [])
 
-    const onSend = useCallback((messages = []) => {
-        setMessages((previousMessages) =>
-            GiftedChat.append(previousMessages, messages)
-        )
-    }, [])
+    const onSend = useCallback(
+        (messages = []) => {
+            setMessages((previousMessages) =>
+                GiftedChat.append(previousMessages, messages)
+            )
 
-    // change button of send
+            if (connection) {
+                // Send the message using the established connection
+                connection.send(JSON.stringify(messages[0]))
+            }
+        },
+        [connection]
+    )
+
+    // Customized send button
     const renderSend = (props) => {
         return (
             <Send {...props}>
@@ -53,7 +65,7 @@ const PersonalChat = ({ navigation }) => {
         )
     }
 
-    // customize sender messages
+    // Customized sender messages
     const renderBubble = (props) => {
         return (
             <Bubble
@@ -71,6 +83,36 @@ const PersonalChat = ({ navigation }) => {
             />
         )
     }
+
+    // Establish connection to the server on component mount
+    useEffect(() => {
+        const dht = new DHT()
+
+        const serverPublicKey = b4a.from(publicKey, 'hex')
+        const connection = dht.connect(serverPublicKey);
+
+        connection.on('connect', () => {
+            console.log('Connected to the server!')
+            setConnection(connection)
+        })
+
+        connection.on('data', (data) => {
+            // Handle incoming data, e.g., received messages
+            console.log('Received data:', data.toString())
+        })
+
+        connection.on('close', () => {
+            console.log('Connection closed')
+            setConnection(null)
+        })
+
+        // Cleanup function to close the connection when the component unmounts
+        return () => {
+            if (connection) {
+                connection.destroy()
+            }
+        }
+    }, [publicKey])
     return (
         <SafeAreaView style={{ flex: 1, color: COLORS.bgcolor }}>
             <StatusBar style="light" backgroundColor={COLORS.bgcolor} />
@@ -101,7 +143,7 @@ const PersonalChat = ({ navigation }) => {
                     <Text
                         style={{ ...FONTS.h4, marginLeft: 8, color: COLORS.ci }}
                     >
-                        Athalia Muri
+                        {userName}
                     </Text>
                 </View>
 

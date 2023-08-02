@@ -13,6 +13,8 @@ import { COLORS, FONTS } from '../constants'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { contacts } from '../constants/data'
 
+// hole punch imports
+
 const Contacts = ({ navigation }) => {
     const [search, setSearch] = useState('')
     const [filteredUsers, setFilteredUsers] = useState(contacts)
@@ -31,6 +33,7 @@ const Contacts = ({ navigation }) => {
             onPress={() =>
                 navigation.navigate('PersonalChat', {
                     userName: item.userName,
+                    publicKey: item.publicKey
                 })
             }
             style={[

@@ -1,3 +1,4 @@
+import 'react-native-get-random-values';
 import * as SplashScreen from 'expo-splash-screen'
 import { useFonts } from 'expo-font'
 import { NavigationContainer } from '@react-navigation/native'

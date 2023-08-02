@@ -10,6 +10,7 @@ export const contacts = [
         lastMessage: 'How is it going...',
         messageInQueue: 3,
         sentDate: '12/7',
+        publicKey: '1',
     },
     {
         id: '2',
@@ -20,6 +21,7 @@ export const contacts = [
         lastMessage: 'Good morning...',
         messageInQueue: 0,
         sentDate: '12/7',
+        publicKey: '1',
     },
     {
         id: '3',
@@ -30,6 +32,7 @@ export const contacts = [
         lastMessage: "What's up...",
         messageInQueue: 0,
         sentDate: '12/7',
+        publicKey: '1',
     },
     {
         id: '4',
@@ -40,6 +43,7 @@ export const contacts = [
         lastMessage: 'Send me the link',
         messageInQueue: 0,
         sentDate: 'Today',
+        publicKey: '1',
     },
     {
         id: '5',
@@ -50,6 +54,7 @@ export const contacts = [
         lastMessage: 'We are doing...',
         messageInQueue: 0,
         sentDate: '23/9',
+        publicKey: '1',
     },
     {
         id: '6',
@@ -60,6 +65,7 @@ export const contacts = [
         lastMessage: 'How is it going...',
         messageInQueue: 3,
         sentDate: 'Today',
+        publicKey: '1',
     },
     {
         id: '7',
@@ -70,6 +76,7 @@ export const contacts = [
         lastMessage: 'How is it going...',
         messageInQueue: 3,
         sentDate: '12/7',
+        publicKey: '1',
     },
     {
         id: '8',
@@ -80,6 +87,7 @@ export const contacts = [
         lastMessage: 'How is it going...',
         messageInQueue: 3,
         sentDate: '12/7',
+        publicKey: '1',
     },
     {
         id: '9',
@@ -90,5 +98,6 @@ export const contacts = [
         lastMessage: 'How is it going...',
         messageInQueue: 3,
         sentDate: '12/7',
+        publicKey: '1',
     },
 ]
