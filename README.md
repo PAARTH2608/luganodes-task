@@ -20,13 +20,21 @@ Run the project
 ```bash
     yarn expo
 ```
+Run the project using docker
+```bash
+    docker-compose up
+```
     
 ## Deployment
 
-To deploy this project run
-
+To build this project using docker
 ```bash
-  yarn run deploy
+  docker-compose build
+```
+
+To build this project using docker
+```bash
+  docker-compose up
 ```
 
 
