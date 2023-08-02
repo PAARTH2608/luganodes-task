@@ -1,7 +1,7 @@
 version: '2.4'
 
 services:
-    react_native_app:
+    chat_net:
         build:
             context: .
             args:
